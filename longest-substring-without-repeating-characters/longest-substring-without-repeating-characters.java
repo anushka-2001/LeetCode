@@ -5,12 +5,12 @@ class Solution {
         while(j<s.length()){
             if(!set.contains(s.charAt(j))){
                 set.add(s.charAt(j++));
-                max = Math.max(max,set.size());
+                max = Math.max(max, set.size());
             }
-            else {
+            else{
                 set.remove(s.charAt(i++));
             }
         }
-        return max;
+        return Math.max(set.size(),max);
     }
 }
