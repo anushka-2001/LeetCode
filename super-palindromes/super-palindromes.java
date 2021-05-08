@@ -1,46 +1,48 @@
 class Solution {
-    public int superpalindromesInRange(String sL, String sR) {
-        long L = Long.valueOf(sL);
-        long R = Long.valueOf(sR);
-        int MAGIC = 100000;
-        int ans = 0;
-
-        // count odd length;
-        for (int k = 1; k < MAGIC; ++k) {
-            StringBuilder sb = new StringBuilder(Integer.toString(k));
-            for (int i = sb.length() - 2; i >= 0; --i)
-                sb.append(sb.charAt(i));
-            long v = Long.valueOf(sb.toString());
-            v *= v;
-            if (v > R) break;
-            if (v >= L && isPalindrome(v)) ans++;
+    public int superpalindromesInRange(String L, String R) {
+        //long is able to store 19 digits, but accuracy is 18 digits.
+        long l = Long.parseLong(L);
+        long r = Long.parseLong(R);
+        int[] res = new int[1];
+        //Don't forget to generate even digits palindromes
+        dfs("", l, r, res);
+        //Generate odd digits palindromes
+        for (int i = 0; i < 10; i++) {
+            dfs("" + i, l, r, res);
         }
-
-        // count even length;
-        for (int k = 1; k < MAGIC; ++k) {
-            StringBuilder sb = new StringBuilder(Integer.toString(k));
-            for (int i = sb.length() - 1; i >= 0; --i)
-                sb.append(sb.charAt(i));
-            long v = Long.valueOf(sb.toString());
-            v *= v;
-            if (v > R) break;
-            if (v >= L && isPalindrome(v)) ans++;
-        }
-
-        return ans;
+        return res[0];
     }
-
-    public boolean isPalindrome(long x) {
-        return x == reverse(x);
-    }
-
-    public long reverse(long x) {
-        long ans = 0;
-        while (x > 0) {
-            ans = 10 * ans + x % 10;
-            x /= 10;
+    
+    private void dfs(String s, long l, long r, int[] res) {
+        //If s.length() > 9, super-palindrome's length must larger than 18
+        if (s.length() > 9) {
+            return;
         }
-
-        return ans;
+        //Verify if s is within the required boundary.
+        if (s.length() > 0 && s.charAt(0) != 0) {
+            long num = Long.parseLong(s);
+            num *= num;
+            //Prune the unqualified palindromes branch
+            if (num > r) { return; }
+            if (num >= l && isPalindrome("" + num)) {
+                res[0]++;
+            }
+        }
+        //Generate the next palindromes
+        for (int i = 0; i < 10; i++) {
+            String next = "" + i + s + i;
+            dfs(next, l, r, res);
+        }
+    }
+    
+    private boolean isPalindrome(String s) {
+        int head = 0;
+        int tail = s.length() - 1;
+        while (head < tail) {
+            if (s.charAt(head++) != s.charAt(tail--)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
