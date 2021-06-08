@@ -1,11 +1,11 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums.length==0)return 0;
-        int dp[]= new int[nums.length+1];
-        dp[1]= nums[0];
-        for(int i=1; i<nums.length; i++){
-            dp[i+1]= Math.max(dp[i], dp[i-1]+nums[i]);
+        int rob =0, donot = 0;
+        for(int i=0; i<nums.length; i++){
+            int current_rob = donot + nums[i];
+            donot = Math.max(donot, rob);
+            rob = current_rob;
         }
-        return dp[nums.length];
+        return Math.max(rob, donot);
     }
 }
