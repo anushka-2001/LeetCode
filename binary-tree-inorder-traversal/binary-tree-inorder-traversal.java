@@ -19,10 +19,12 @@ class Solution {
         
         if(root!=null){
             
-            inorderTraversal(root.left);
-            ans.add(root.val);
-            inorderTraversal(root.right);
+         inorderTraversal(root.left);
+        ans.add(root.val);
+         inorderTraversal(root.right);
+            
         }
+        
         return ans;
         
     }
