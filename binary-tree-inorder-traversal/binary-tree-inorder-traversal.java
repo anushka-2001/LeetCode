@@ -17,13 +17,24 @@ class Solution {
     List<Integer> ans = new LinkedList<Integer>();
     public List<Integer> inorderTraversal(TreeNode root) {
         
-        if(root!=null){
+       Stack<TreeNode> stack = new Stack();
+        TreeNode curr = root;
+        while(curr!=null || !stack.isEmpty()){
             
-         inorderTraversal(root.left);
-        ans.add(root.val);
-         inorderTraversal(root.right);
+            if(curr!=null){
+                stack.push(curr);
+                curr= curr.left;
+            }
+            else{
+                curr = stack.pop();
+                ans.add(curr.val);
+                curr = curr.right;
+            }
+            
             
         }
+        
+        
         
         return ans;
         
