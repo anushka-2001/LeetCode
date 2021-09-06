@@ -1,21 +1,21 @@
 class Solution {
-    public boolean isValid(String s) {
-        
-        Stack <Character> stack= new Stack<>();
-        for(char c: s.toCharArray()){
-            if(c=='('){
-                stack.push(')');
+    public boolean isValid(String st) {
+        Stack<Character> s = new Stack<>();
+        if(st.length()==1)return false;
+        for(char ch : st.toCharArray()){
+            if(ch=='['||ch=='{'|| ch=='('|| s.isEmpty()){
+                s.push(ch);
             }
-           else  if(c=='{'){
-                stack.push('}');
+            else if(ch ==']'){
+                if(s.pop()!='[') return false;
             }
-           else  if(c=='['){
-                stack.push(']');
+             else if(ch =='}'){
+                if(s.pop()!='{') return false;
             }
-            else if( stack.isEmpty()|| stack.pop()!=c){
-                return false;
+             else if(ch ==')'){
+                if(s.pop()!='(') return false;
             }
         }
-        return stack.isEmpty();
+        return s.size()== 0;
     }
 }
