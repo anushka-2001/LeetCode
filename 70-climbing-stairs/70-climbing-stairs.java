@@ -1,10 +1,11 @@
 class Solution {
     public int climbStairs(int n) {
-        int a=1,b=1;
+        int a=0,b=1,sum =0;
         while( n-- >0){
-                    a = (b += a) - a;
-
+sum = a+b;
+            a = b;
+            b = sum;
         }
-        return a;
+        return sum;
     }
 }
